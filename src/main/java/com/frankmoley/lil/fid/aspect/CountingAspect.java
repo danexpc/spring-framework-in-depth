@@ -20,7 +20,8 @@ public class CountingAspect {
     private static final Map<String, Integer> countingMap = new HashMap<>();
 
     @Pointcut("@annotation(Countable)")
-    public void executeCounting() {}
+    public void executeCounting() {
+    }
 
     @Before("executeCounting()")
     public void countMethodCall(JoinPoint joinPoint) {

@@ -15,13 +15,13 @@ public class OutputService {
     private final TimeService timeService;
 
     @Autowired
-    public OutputService(GreetingService greetingService, TimeService timeService){
+    public OutputService(GreetingService greetingService, TimeService timeService) {
         this.greetingService = greetingService;
         this.timeService = timeService;
     }
 
     @Countable
-    public void generateOutput(){
+    public void generateOutput() {
         String output = timeService.getCurrentTime() + " " + greetingService.getGreeting(name);
         System.out.println(output);
     }

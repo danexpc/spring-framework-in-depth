@@ -11,13 +11,13 @@ public class GreetingService {
     @Value("${app.greeting}")
     private String greeting;
 
-    public GreetingService(){
+    public GreetingService() {
         super();
     }
 
     @Loggable
     @Countable
-    public String getGreeting(String name){
+    public String getGreeting(String name) {
         return greeting + " " + name;
     }
 }

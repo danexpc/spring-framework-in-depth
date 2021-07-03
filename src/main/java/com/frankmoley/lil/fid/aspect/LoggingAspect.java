@@ -38,7 +38,7 @@ public class LoggingAspect {
         }
 
         if (returnValue instanceof Collection) {
-            message.append(", returning: ").append(((Collection)returnValue).size()).append(" instance(s)");
+            message.append(", returning: ").append(((Collection) returnValue).size()).append(" instance(s)");
         } else {
             message.append(", returning: ").append(returnValue.toString());
         }
