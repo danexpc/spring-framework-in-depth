@@ -27,15 +27,8 @@ public class ApplicationConfig {
     private TimeService timeService;
 
     @Bean
-    @Profile("!dev")
     public TimeService timeService() {
         return new TimeService(true);
-    }
-
-    @Bean
-    @Profile("dev")
-    public TimeService timeService12() {
-        return new TimeService(false);
     }
 
     @Bean
