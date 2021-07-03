@@ -1,10 +1,8 @@
 package com.frankmoley.lil.fid.aspect;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -22,16 +20,23 @@ public class LoggingAspect {
     public void executeLogging() {
     }
 
-    @AfterReturning(value = "executeLogging()", returning = "returnValue")
-    public void logMethodCall(JoinPoint joinPoint, Object returnValue) {
+    @Around("executeLogging()")
+    public Object logMethodCall(ProceedingJoinPoint joinPoint) throws Throwable {
+        var startTime = System.currentTimeMillis();
+        Object returnValue = joinPoint.proceed();
+        var totalTime = System.currentTimeMillis() - startTime;
+
         var message = new StringBuilder("Method: ");
         message.append(joinPoint.getSignature().getName());
+        message.append(" totalTime: ").append(totalTime).append("ms");
+
         var args = joinPoint.getArgs();
         if (args != null && args.length > 0) {
             message.append(" args[ | ");
             Arrays.asList(args).forEach(arg -> message.append(arg).append(" | "));
             message.append("]");
         }
+
         if (returnValue instanceof Collection) {
             message.append(", returning: ").append(((Collection)returnValue).size()).append(" instance(s)");
         } else {
@@ -40,5 +45,7 @@ public class LoggingAspect {
 
         var logMessage = message.toString();
         LOGGER.info(logMessage);
+
+        return returnValue;
     }
 }
