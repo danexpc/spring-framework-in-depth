@@ -11,7 +11,7 @@ public class Application {
         var outputService = context.getBean(OutputService.class);
 
         for (int i = 0; i < 5; i++) {
-            outputService.generateOutput("Frank");
+            outputService.generateOutput();
             Thread.sleep(5000);
         }
     }
